@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot Project Demo 10</title>
+<link rel="stylesheet" th:href="@{/styles/index.css}">
+</head>
+<body>
+    <div class="cabecera">
+        <div class="cab1"></div>
+        <div class="cap2"></div>
+    </div>
+    <div class="cuerpo">
+        <div class="panel1">
+            <div class="nota"><div class="notacab1"><p>Proyecto</p></div>
+                              <div class="notabody"><p style="text-align: center;"><span>#Spring Boot Project Demo 10</span></p>
+                            </div>
+            </div>
+            <div class="nota"><div class="notacab1"><p>Objetivos</p></div>
+                              <div class="notabody">
+                                                    <p class="objetivos">- <b>C</b>onfiguración de una JPA (Java Persistence API).</p>
+                                                    <p class="objetivos">- <b>M</b>apear tablas de base de datos con modelos.</p>
+                                                    <p class="objetivos">- <b>I</b>mplementar servicios que provean objetos mapeados contra una tabla o consulta HQL (Hibernate Query Languaje).</p>
+                                                    <p class="objetivos">- <b>O</b>peraciones básicas de JPA - Hibernate.</p>
+                              </div>        
+                            
+            </div>
+            <div class="nota"><div class="notacab2"><p>Entorno de Desarrollo</p></div>
+                              <div class="notabody"><p><span>Ide:</span> Sprint Tool Suite, versión: 4</p>
+                                                    <p><span>Servidor de referencia:</span> Apache Tomcat, versión: 10</p>
+                                                    <p><span>Jdk:</span> OpenJdk, versión: 17.1</p>
+                            </div>
+            </div>
+            <div class="nota"><div class="notacab2"><p>Estandar de Desarrollo</p></div>
+                              <div class="notabody"><p><span>Gestor de proyecto:</span> Maven, versión: 4</p>
+                            </div>
+            </div> 
+            <div class="nota"><div class="notacab2"><p>Dependencias</p></div>
+                              <div class="notabody"><p><span>Spring Boot Framework:</span> Spring, versión 3.1.*. Módulos: spring-boot-starter-data-jpa, spring-boot-starter-web, spring-boot-starter-thymeleaf, mysql-connector-j</p>
+                                                    
+                            </div>
+            </div>   
+            <div class="nota"><div class="notacab2"><p>Documentación y Sitios de Interés</p></div>
+                              <div class="notabody"><p><a href="https://mvnrepository.com/" target="_blank"><b>Ir a</b></a> Maven Repository (para localizar dependencias)</p>
+                                                    <p><a href="https://docs.spring.io/spring-framework/docs/current/reference/html/" target="_blank"><b>Leer</b></a> Documentación de Spring Framework</p>
+                                                    <p><a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"target="_blank"><b>Leer</b></a> Documentación de Spring Boot</p>
+                                                    <p><a href="https://docs.jboss.org/hibernate/orm/3.5/reference/en/html/queryhql.html" target="_blank"><b>Leer</b></a> sobre como construir sentencias HQL de acceso a base de datos con Hibernate (ORM)</p>
+                                                    <p><a href="https://www.tutorialspoint.com/hibernate/hibernate_query_language.htm" target="_blank"><b>Leer</b></a> sobre como construir sentencias HQL de acceso a base de datos con Hibernate (ORM) II</p>
+                                                    <p><a href="https://www.adictosaltrabajo.com/2020/04/02/hibernate-onetoone-onetomany-manytoone-y-manytomany/" target="_blank"><b>Leer</b></a> sobre como configurar atributos de clases que hacen referencia a la relación con otros objetos para explotar con Hibernate (ORM)</p>
+                            </div>
+            </div>         
+        </div>
+        <div class="panel2">
+            <div class="item"><p><span>Introducción</span> <br><br>Esta demo, no se centra en la representación de los datos en las vistas, pues para ello ya dispones de las demos anteriores donde se centra el desarrollo en el MVC. Es en la única controladora de este proyecto (IndexController) donde tiene a disposición los test de ejecución para verificar la correcta configuración del JPA y que puede depurar paso a paso para comprobar esta nueva funcionalidad. <br><br>A continuación, se le indican los pasos/orden que debe seguir para examinar este proyecto o configurar un ORM como es el caso del que se implementa en este ejemplo: <b>JPA-Hibernate</b>. <br><br>Siga los pasos y examine el código en el orden indicado:</p></div>
+            <div class="item"><p><span>Paso 1:</span><br><br>Para este ejemplo, se requiere haber importado previamente la base de datos o esquema proporcionado en el mismo (data-stockdb.sql) correspondiente al esquema stockdb que define dos tablas: articulo y tipoarticulo, las cuales guardan una relación de 1:M.<br><br> Es decir, un registro en tipoarticulo se puede relacionar o no con muchos registros de la tabla articulo y a su vez, un registro de la tabla articulo se relaciona obligatoriamente con un solo registro de la tabla tipoarticulo:</p><br>
+                              <p style="text-align: center;"><img th:src="@{/img/er.jpg}" /></p>
+            </div>
+            <div class="item"><p><span>Paso 2:</span><br><br> Añadir al pom.xml las dependencias: spring-boot-starter-data-jpa, mysql-connector-j</p>           
+            </div>
+            <div class="item"><p><span>Paso 3:</span><br><br> Configurar en el fichero application.properties el JPA:</p>
+                              <br><br>
+                              <p style="text-align: center;"><img th:src="@{/img/properties.jpg}" /></p>
+            </div>
+            <div class="item"><p><span>Paso 4:</span><br><br> Crear la clase/s que deseas mapear contra la base de datos. Es decir, la clase que se asociará a una tabla de la base de datos. Para ello, puedes examinar las clases TipoArticulo.java y Articulo.java de este proyecto.</p>
+                              <p>Para mapear una clase, deberá hacer uso de javas annotation del estilo de: @Entity, @Table, @Id, @GeneratedValue, @Column, @ManyToOne(), @JoinColumn, etc</p>
+            </div>
+            <div class="item"><p><span>Paso 5:</span><br><br> Para cada clase mapeata (Articulo.java y TipoArticulo.java) es necesario crear un repositorio, es decir, una interfaz por cada clase (no es obligatorio añafir nuevos métodos a las interfaces para una operativa básica). Ver interfaces ArticuloRepository.java y TipoArticuloRepository.java.</p></div>
+            <div class="item"><p><span>Paso 6:</span><br><br> Para cada clase mapeata (Articulo.java y TipoArticulo.java) es necesario crear un servicio que deberá implementar los métodos que proporcionarán las funcionalidades disponibles desde la controladora y que harán uso de su respectivo repositorio. Ver las clases ArticuloService.java y TipoArticuloService.java.</p></div>
+            <div class="item"><p><span>Paso 7:</span><br><br> Testear o explotar los servicios implementados de cada modelo. En la controladora IndexController tiene un ejemplo de uso del JPA.</p></div>
+        </div>
+    </div>
+    <div class="pie"><p><span>©</span> 2023 - Daniel Pérez Pérez</p></div>
+
+</body>
+</html>
